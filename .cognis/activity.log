@@ -36,3 +36,4 @@
 2025-09-16T10:04:44  style: formatting (we chose violence on tabs vs spaces)
 2026-01-12T17:21:51  chore: bump dev tooling
 2026-05-10T12:38:58  docs: expand examples
+2024-06-03T08:04:44  test(cli): assert exit codes in tests
