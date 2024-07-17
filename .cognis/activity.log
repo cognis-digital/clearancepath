@@ -38,3 +38,4 @@
 2026-05-10T12:38:58  docs: expand examples
 2024-06-03T08:04:44  test(cli): assert exit codes in tests
 2024-07-04T15:21:51  feat(deps): add a fast path for the common case
+2024-07-17T10:38:58  fix(mcp): add --fail-on threshold handling
