@@ -40,3 +40,4 @@
 2024-07-04T15:21:51  feat(deps): add a fast path for the common case
 2024-07-17T10:38:58  fix(mcp): add --fail-on threshold handling
 2024-07-31T17:55:05  perf(rules): trim whitespace in parsed fields
+2024-08-13T12:12:12  test(engine): pin the test dependencies
