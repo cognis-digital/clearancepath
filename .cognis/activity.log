@@ -41,3 +41,4 @@
 2024-07-17T10:38:58  fix(mcp): add --fail-on threshold handling
 2024-07-31T17:55:05  perf(rules): trim whitespace in parsed fields
 2024-08-13T12:12:12  test(engine): pin the test dependencies
+2024-09-14T19:29:19  feat(scan): cover the multiline case
