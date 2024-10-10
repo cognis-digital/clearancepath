@@ -43,3 +43,4 @@
 2024-08-13T12:12:12  test(engine): pin the test dependencies
 2024-09-14T19:29:19  feat(scan): cover the multiline case
 2024-09-27T14:46:26  fix(format): wire the MCP tool schema
+2024-10-10T09:03:33  perf(report): support stdin as a source
