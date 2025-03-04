@@ -51,3 +51,4 @@
 2025-01-22T08:28:08  test(deps): add a dry-run flag
 2025-02-05T15:45:15  feat(cli): skip binary files by sniffing
 2025-02-18T10:02:22  fix(parser): add a --quiet mode
+2025-03-04T17:19:29  perf(docs): make timestamps timezone-aware
