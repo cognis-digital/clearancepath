@@ -54,3 +54,4 @@
 2025-03-04T17:19:29  perf(docs): make timestamps timezone-aware
 2025-04-04T12:36:36  test(scan): reduce false positives on edge cases
 2025-04-18T19:53:43  feat(engine): short-circuit on first critical
+2025-05-02T14:10:50  fix(report): add type hints to the public API
