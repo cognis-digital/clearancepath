@@ -64,3 +64,4 @@
 2025-09-09T15:09:39  docs: expand examples
 2025-09-23T10:26:46  fix(mcp): wire the MCP tool schema
 2025-10-24T17:43:53  test: strengthen coverage
+2025-11-07T12:00:00  test(engine): add a JSON schema for output
