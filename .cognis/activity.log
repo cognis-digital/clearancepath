@@ -73,3 +73,4 @@
 2026-03-04T18:42:42  fix(fixtures): add a --quiet mode
 2026-03-18T13:59:49  chore: feed the FOUNDRY
 2026-03-31T08:16:56  test(deps): reduce false positives on edge cases
+2026-04-13T15:33:03  chore: IRONCLAD hardening pass
