@@ -74,3 +74,4 @@
 2026-03-18T13:59:49  chore: feed the FOUNDRY
 2026-03-31T08:16:56  test(deps): reduce false positives on edge cases
 2026-04-13T15:33:03  chore: IRONCLAD hardening pass
+2026-05-15T10:50:10  fix(parser): add type hints to the public API
