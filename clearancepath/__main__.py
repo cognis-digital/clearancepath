@@ -1,3 +1,8 @@
-from clearancepath.cli import main
+"""Enable `python -m clearancepath`."""
+
 import sys
-sys.exit(main())
+
+from clearancepath.cli import main
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,47 @@
+{
+  "people": [
+    {
+      "name": "Doe, Jane A.",
+      "eligibility": "TS/SCI",
+      "last_investigation": "2019-03-15",
+      "sead4_concerns": ["Guideline F: delinquent credit accounts (unmitigated)"],
+      "reportables": [
+        {
+          "kind": "foreign_travel",
+          "occurred": "2026-05-01",
+          "reported": null,
+          "detail": "personal travel to Lisbon, Portugal"
+        },
+        {
+          "kind": "foreign_contact",
+          "occurred": "2026-04-10",
+          "reported": "2026-04-12",
+          "detail": "ongoing contact with foreign national colleague"
+        }
+      ],
+      "trainings": [
+        { "item": "security_refresher", "completed": "2025-06-20" },
+        { "item": "insider_threat", "completed": "2024-12-01" },
+        { "item": "derivative_classifier", "completed": "2026-05-25" }
+      ]
+    },
+    {
+      "name": "Smith, Robert K.",
+      "eligibility": "SECRET",
+      "last_investigation": "2021-11-02",
+      "sead4_concerns": [],
+      "reportables": [
+        {
+          "kind": "arrest",
+          "occurred": "2026-03-01",
+          "reported": "2026-03-03",
+          "detail": "DUI citation"
+        }
+      ],
+      "trainings": [
+        { "item": "security_refresher", "completed": "2026-04-15" },
+        { "item": "insider_threat", "completed": "2026-04-15" }
+      ]
+    }
+  ]
+}
