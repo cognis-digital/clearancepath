@@ -1,0 +1,10 @@
+{
+  "name": "@cognis/clearancepath",
+  "version": "0.2.0",
+  "description": "JavaScript port of clearancepath (Cognis Neural Suite)",
+  "bin": {
+    "clearancepath": "index.js"
+  },
+  "license": "LicenseRef-COCL-1.0",
+  "type": "module"
+}
