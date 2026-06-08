@@ -1,0 +1,16 @@
+[
+  {
+    "id": "emp-001",
+    "reportable_event": true,
+    "reported_within_days": "45",
+    "training_overdue": false,
+    "event": "foreign travel - 3 weeks Thailand"
+  },
+  {
+    "id": "emp-014",
+    "reportable_event": true,
+    "reported_within_days": "60",
+    "training_overdue": false,
+    "event": "new financial interest > $10K"
+  }
+]

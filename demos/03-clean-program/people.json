@@ -1,0 +1,12 @@
+[
+  {
+    "id": "emp-001",
+    "reportable_event": false,
+    "training_overdue": false
+  },
+  {
+    "id": "emp-002",
+    "reportable_event": false,
+    "training_overdue": false
+  }
+]

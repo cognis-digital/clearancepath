@@ -1,0 +1,13 @@
+[
+  {
+    "id": "emp-001",
+    "reportable_event": true,
+    "reported_within_days": "45",
+    "training_overdue": false
+  },
+  {
+    "id": "emp-002",
+    "reportable_event": false,
+    "training_overdue": true
+  }
+]

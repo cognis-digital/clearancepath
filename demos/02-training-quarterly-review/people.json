@@ -1,0 +1,16 @@
+[
+  {
+    "id": "emp-001",
+    "training_overdue": true,
+    "training": "annual security refresher"
+  },
+  {
+    "id": "emp-002",
+    "training_overdue": true,
+    "training": "insider-threat awareness"
+  },
+  {
+    "id": "emp-003",
+    "training_overdue": false
+  }
+]
