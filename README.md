@@ -36,7 +36,9 @@ Personnel clearance hygiene tracker — SF-86, SEAD-3/4, training currency — w
 <a name="features"></a>
 ## Features
 
-- ✅ Scan
+- ✅ Parse Date
+- ✅ Assess Person
+- ✅ Assess Roster
 - ✅ Runs on Linux/macOS/Windows · Docker · devcontainer
 - ✅ Ports in Python, JavaScript, Go, and Rust (`ports/`)
 
