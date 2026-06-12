@@ -16,7 +16,7 @@
 </div>
 
 ```bash
-pip install cognis-clearancepath
+pip install "git+https://github.com/cognis-digital/clearancepath.git"
 clearancepath scan .            # → prioritized findings in seconds
 ```
 
@@ -48,7 +48,7 @@ Personnel clearance hygiene tracker — SF-86, SEAD-3/4, training currency — w
 ## Quick start
 
 ```bash
-pip install cognis-clearancepath
+pip install "git+https://github.com/cognis-digital/clearancepath.git"
 clearancepath --version
 clearancepath scan .                       # scan current project
 clearancepath scan . --format json         # machine-readable
