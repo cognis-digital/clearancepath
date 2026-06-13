@@ -20,6 +20,31 @@ pip install cognis-clearancepath
 clearancepath scan .            # → prioritized findings in seconds
 ```
 
+## Usage — step by step
+
+`clearancepath` is a personnel clearance / training-currency hygiene tracker over a roster JSON.
+
+1. **Install**:
+   ```bash
+   pip install -e .
+   ```
+2. **Assess a full roster**:
+   ```bash
+   clearancepath assess roster.json
+   ```
+3. **Show only items needing attention** (WARN/CRITICAL):
+   ```bash
+   clearancepath due roster.json
+   ```
+4. **Evaluate as of a future date** to forecast upcoming expirations, and emit JSON:
+   ```bash
+   clearancepath --as-of 2026-09-01 --format json assess roster.json
+   ```
+5. **Automate in CI/cron** — gate a pipeline on the `due` set; parse the JSON for any CRITICAL items:
+   ```bash
+   clearancepath --format json due roster.json > due.json
+   ```
+
 ## Contents
 
 - [Why clearancepath?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
