@@ -20,6 +20,12 @@ pip install "git+https://github.com/cognis-digital/clearancepath.git"
 clearancepath scan .            # → prioritized findings in seconds
 ```
 
+<!-- cognis:layman:start -->
+## What is this?
+
+ClearancePath is a command-line tool that helps security officers and program managers keep federal personnel security clearances in good standing. You give it a roster of cleared employees (a simple JSON file with each person's clearance level, last investigation date, training completions, and any reportable events), and it instantly tells you who is overdue for reinvestigation, who has missed mandatory training refreshers, and who has SEAD-3 reporting obligations that have not been filed. It follows the actual SF-86, SEAD-3, and SEAD-4 federal standards, so findings map directly to real compliance requirements rather than generic checklists. It is designed for security managers, facility security officers, and compliance teams who need a fast, scriptable, no-account-required hygiene check that can run in CI pipelines or be driven by AI agents over MCP.
+<!-- cognis:layman:end -->
+
 ## Contents
 
 - [Why clearancepath?](#why) · [Features](#features) · [Quick start](#quick-start) · [Example](#example) · [Architecture](#architecture) · [AI stack](#ai-stack) · [How it compares](#how-it-compares) · [Integrations](#integrations) · [Install anywhere](#install-anywhere) · [Related](#related) · [Contributing](#contributing)
@@ -45,6 +51,42 @@ Personnel clearance hygiene tracker — SF-86, SEAD-3/4, training currency — w
 <div align="right"><a href="#top">↑ back to top</a></div>
 
 <a name="quick-start"></a>
+<!-- cognis:install:start -->
+## Install
+
+`clearancepath` is source-available (not published to PyPI) — every method below installs
+straight from GitHub. Pick whichever you prefer; the one-line scripts auto-detect
+the best tool available on your machine.
+
+**One-liner (Linux / macOS):**
+```sh
+curl -fsSL https://raw.githubusercontent.com/cognis-digital/clearancepath/HEAD/install.sh | sh
+```
+
+**One-liner (Windows PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/cognis-digital/clearancepath/HEAD/install.ps1 | iex
+```
+
+**Or install manually — any one of:**
+```sh
+pipx install "git+https://github.com/cognis-digital/clearancepath.git"     # isolated (recommended)
+uv tool install "git+https://github.com/cognis-digital/clearancepath.git"  # uv
+pip install "git+https://github.com/cognis-digital/clearancepath.git"      # pip
+```
+
+**From source:**
+```sh
+git clone https://github.com/cognis-digital/clearancepath.git
+cd clearancepath && pip install .
+```
+
+Then run:
+```sh
+clearancepath --help
+```
+<!-- cognis:install:end -->
+
 ## Quick start
 
 ```bash
