@@ -52,9 +52,17 @@ def _load_roster(path: str) -> list[Person]:
     else:
         raise SystemExit(f"{TOOL_NAME}: unexpected JSON shape in {path}")
 
+    if not records:
+        # Empty roster is valid; return empty list (produces clean exit 0).
+        return []
+    for idx, r in enumerate(records):
+        if not isinstance(r, dict):
+            raise SystemExit(
+                f"{TOOL_NAME}: record #{idx} in {path} is not a JSON object"
+            )
     try:
         return [Person.from_dict(r) for r in records]
-    except ValueError as exc:
+    except (ValueError, TypeError) as exc:
         raise SystemExit(f"{TOOL_NAME}: {exc}")
 
 
@@ -157,8 +165,16 @@ def main(argv: Optional[list[str]] = None) -> int:
         print(f"{TOOL_NAME}: {exc}", file=sys.stderr)
         return _USAGE_ERR
 
+    # _load_roster raises SystemExit on bad input (file not found, bad JSON, etc.)
     people = _load_roster(args.roster)
-    reports = assess_roster(people, as_of=as_of)
+
+    try:
+        reports = assess_roster(people, as_of=as_of)
+    except Exception as exc:  # noqa: BLE001
+        print(f"{TOOL_NAME}: unexpected error during assessment: {exc}",
+              file=sys.stderr)
+        return _USAGE_ERR
+
     only_attention = args.command == "due"
 
     if args.format == "json":

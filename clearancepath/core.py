@@ -145,8 +145,23 @@ class Person:
         elig = str(d.get("eligibility", "SECRET")).upper().replace(" ", "")
         # normalize a couple of common spellings
         elig = {"TSSCI": "TS/SCI", "TOPSECRET": "TS"}.get(elig, elig)
+        # Validate sead4_concerns is a sequence, not a bare string
+        raw_concerns = d.get("sead4_concerns") or []
+        if isinstance(raw_concerns, str):
+            raise ValueError(
+                f"sead4_concerns for {d['name']!r} must be a list, not a string"
+            )
         reportables = []
-        for r in d.get("reportables", []) or []:
+        raw_reportables = d.get("reportables", []) or []
+        if isinstance(raw_reportables, str):
+            raise ValueError(
+                f"reportables for {d['name']!r} must be a list, not a string"
+            )
+        for idx, r in enumerate(raw_reportables):
+            if not isinstance(r, dict):
+                raise ValueError(
+                    f"reportable #{idx} for {d['name']!r} must be a JSON object"
+                )
             occ = parse_date(r.get("occurred"))
             if occ is None:
                 raise ValueError(
@@ -161,19 +176,42 @@ class Person:
                 )
             )
         trainings = []
-        for t in d.get("trainings", []) or []:
+        raw_trainings = d.get("trainings", []) or []
+        if isinstance(raw_trainings, str):
+            raise ValueError(
+                f"trainings for {d['name']!r} must be a list, not a string"
+            )
+        for idx, t in enumerate(raw_trainings):
+            if not isinstance(t, dict):
+                raise ValueError(
+                    f"training #{idx} for {d['name']!r} must be a JSON object"
+                )
+            vd = t.get("validity_days")
+            if vd is not None:
+                try:
+                    vd = int(vd)
+                except (TypeError, ValueError):
+                    raise ValueError(
+                        f"validity_days for training #{idx} of {d['name']!r} "
+                        f"must be an integer, got {vd!r}"
+                    )
+                if vd <= 0:
+                    raise ValueError(
+                        f"validity_days for training #{idx} of {d['name']!r} "
+                        f"must be positive, got {vd}"
+                    )
             trainings.append(
                 Training(
                     item=str(t.get("item", "unspecified")),
                     completed=parse_date(t.get("completed")),
-                    validity_days=t.get("validity_days"),
+                    validity_days=vd,
                 )
             )
         return cls(
             name=str(d["name"]),
             eligibility=elig,
             last_investigation=parse_date(d.get("last_investigation")),
-            sead4_concerns=[str(c) for c in (d.get("sead4_concerns") or [])],
+            sead4_concerns=[str(c) for c in raw_concerns],
             reportables=reportables,
             trainings=trainings,
         )
@@ -231,6 +269,15 @@ def _assess_investigation(p: Person, as_of: _dt.date) -> Finding:
             f"no investigation of record for {p.eligibility} eligibility",
         )
     age = (as_of - p.last_investigation).days
+    if age < 0:
+        # Investigation date is in the future — treat record as current.
+        return Finding(
+            "investigation",
+            Severity.INFO,
+            f"investigation date {p.last_investigation} is after as-of date "
+            f"{as_of}; treating record as current",
+            days=age,
+        )
     overdue = age - horizon
     if overdue > 0:
         return Finding(

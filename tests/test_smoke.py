@@ -139,3 +139,144 @@ class TestCLI(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ---------------------------------------------------------------------------
+# Hardening tests: edge cases and bad input
+# ---------------------------------------------------------------------------
+
+class TestHardening(unittest.TestCase):
+    """Tests for the hardening additions: validation, edge cases, bad input."""
+
+    # ---- core.py: Person.from_dict input validation ----
+
+    def test_reportable_non_dict_raises(self):
+        """A reportable that is a plain string must raise ValueError."""
+        with self.assertRaises(ValueError):
+            Person.from_dict({
+                "name": "Bad",
+                "reportables": ["not-a-dict"],
+            })
+
+    def test_training_non_dict_raises(self):
+        """A training item that is an integer must raise ValueError."""
+        with self.assertRaises(ValueError):
+            Person.from_dict({
+                "name": "Bad",
+                "trainings": [42],
+            })
+
+    def test_validity_days_negative_raises(self):
+        """Negative validity_days must raise ValueError."""
+        with self.assertRaises(ValueError):
+            Person.from_dict({
+                "name": "Bad",
+                "trainings": [{"item": "insider_threat", "validity_days": -5}],
+            })
+
+    def test_validity_days_zero_raises(self):
+        """Zero validity_days must raise ValueError."""
+        with self.assertRaises(ValueError):
+            Person.from_dict({
+                "name": "Bad",
+                "trainings": [{"item": "insider_threat", "validity_days": 0}],
+            })
+
+    def test_sead4_concerns_as_string_raises(self):
+        """sead4_concerns passed as a bare string must raise ValueError."""
+        with self.assertRaises(ValueError):
+            Person.from_dict({
+                "name": "Bad",
+                "sead4_concerns": "some concern",
+            })
+
+    def test_future_investigation_date_is_info(self):
+        """An investigation date after as_of must produce an INFO finding,
+        not CRITICAL."""
+        import datetime as dt2
+        p = Person(
+            name="Future",
+            eligibility="SECRET",
+            last_investigation=dt2.date(2030, 1, 1),
+        )
+        rep = assess_person(p, as_of=dt2.date(2026, 1, 1))
+        inv = [f for f in rep.findings if f.category == "investigation"][0]
+        from clearancepath import Severity
+        self.assertEqual(inv.severity, Severity.INFO)
+
+    # ---- core.py: empty roster ----
+
+    def test_assess_empty_roster(self):
+        """assess_roster([]) must return an empty list without error."""
+        from clearancepath.core import assess_roster
+        result = assess_roster([])
+        self.assertEqual(result, [])
+
+    # ---- cli.py: malformed JSON gives SystemExit ----
+
+    def test_malformed_json_raises_system_exit(self):
+        """A file with invalid JSON must raise SystemExit."""
+        import tempfile
+        import os
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json",
+                                        delete=False) as tmp:
+            tmp.write("{not valid json}")
+            tmppath = tmp.name
+        try:
+            with self.assertRaises(SystemExit):
+                main(["assess", tmppath])
+        finally:
+            os.unlink(tmppath)
+
+    def test_non_object_roster_items_raise_system_exit(self):
+        """A JSON array containing strings instead of objects must raise SystemExit."""
+        import tempfile
+        import os
+        import json
+        data = ["Alice", "Bob"]
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json",
+                                        delete=False) as tmp:
+            json.dump(data, tmp)
+            tmppath = tmp.name
+        try:
+            with self.assertRaises(SystemExit):
+                main(["assess", tmppath])
+        finally:
+            os.unlink(tmppath)
+
+    def test_empty_roster_file_exits_clean(self):
+        """A JSON file with an empty array must exit 0 (nothing to flag)."""
+        import tempfile
+        import os
+        import json
+        import io
+        from contextlib import redirect_stdout
+        data = []
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json",
+                                        delete=False) as tmp:
+            json.dump(data, tmp)
+            tmppath = tmp.name
+        try:
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                code = main(["assess", tmppath])
+            self.assertEqual(code, 0)
+        finally:
+            os.unlink(tmppath)
+
+    def test_bad_as_of_date_returns_usage_error(self):
+        """--as-of with a non-date string must return exit code 3 (usage error)."""
+        import tempfile
+        import os
+        import json
+        roster = [{"name": "X", "eligibility": "SECRET",
+                   "last_investigation": "2024-01-01"}]
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json",
+                                        delete=False) as tmp:
+            json.dump(roster, tmp)
+            tmppath = tmp.name
+        try:
+            code = main(["--as-of", "not-a-date", "assess", tmppath])
+            self.assertEqual(code, 3)
+        finally:
+            os.unlink(tmppath)
