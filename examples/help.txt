@@ -1,0 +1,19 @@
+$ clearancepath-emit --help
+
+usage: clearancepath [-h] [--version] [--format {table,json}]
+                     [--as-of YYYY-MM-DD]
+                     {assess,due} ...
+
+Personnel clearance hygiene tracker (SF-86 PR cadence, SEAD-3/4, training
+currency).
+
+positional arguments:
+  {assess,due}
+    assess              full hygiene assessment of a roster
+    due                 only items needing attention (WARN/CRITICAL)
+
+options:
+  -h, --help            show this help message and exit
+  --version             show program's version number and exit
+  --format {table,json}
+  --as-of YYYY-MM-DD    evaluate as of this date (default: today)

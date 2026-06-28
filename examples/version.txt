@@ -1,0 +1,3 @@
+$ clearancepath-emit --version
+
+clearancepath 1.0.0
